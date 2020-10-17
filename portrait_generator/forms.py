@@ -26,9 +26,10 @@ class GeneratorForm(forms.Form):
     def clean_gene_file(self):
         method = self.cleaned_data['gene_load_method']
         gene = self.cleaned_data['gene_file']
+        print(gene)
 
         if method == "F":
-            if len(gene) == 0:
+            if gene is None:
                 raise ValidationError(_('Empty gene'))
         return gene
 
