@@ -1,3 +1,4 @@
 Django==3.0.2
 numpy==1.18.1
 Pillow==8.0.0
+django_heroku==0.3.1
