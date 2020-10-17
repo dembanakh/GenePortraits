@@ -17,11 +17,11 @@ def extract_gene(data: dict, files: dict) -> str:
     if method == 'R':
         return data['gene_raw']
     elif method == 'F':
-        print(files.keys())
-        code = files['gene_file']
+        bin_code = files['gene_file']
+        code = bin_code.read().decode('utf8').strip()
+        bin_code.close()
         line = code.readline()
         gene_data = code.read().replace(line, '').replace('\n', '')
-        code.close()
         gene_data = gene_data.upper()
         return ''.join(c for c in gene_data if c in Alphabet)
     elif method == 'U':
