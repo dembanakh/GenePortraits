@@ -19,7 +19,7 @@ def index(request):
 
 def result(request):
     if request.method == 'POST':
-        form = GeneratorForm(request.POST)
+        form = GeneratorForm(request.POST, request.FILES)
         if form.is_valid():
             data: dict = form.cleaned_data
             gene = extract_gene(data, request.FILES)

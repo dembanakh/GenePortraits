@@ -27,6 +27,7 @@ class GeneratorForm(forms.Form):
         method = self.cleaned_data['gene_load_method']
         gene = self.cleaned_data['gene_file']
         print(gene)
+        print(self.files['gene_file'])
 
         if method == "F":
             if gene is None:

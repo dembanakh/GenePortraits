@@ -12,6 +12,7 @@
     var fields = Array.from(document.getElementsByTagName("tr")).slice(1, 4);
     var lastValue = select.value;
 
+    select.value = "R";
     for (var field of fields) {
         field.hidden = true;
     }
