@@ -17,7 +17,8 @@ def extract_gene(data: dict, files: dict) -> str:
     if method == 'R':
         return data['gene_raw']
     elif method == 'F':
-        code = files['Gene']
+        print(files.keys())
+        code = files['gene_file']
         line = code.readline()
         gene_data = code.read().replace(line, '').replace('\n', '')
         code.close()
