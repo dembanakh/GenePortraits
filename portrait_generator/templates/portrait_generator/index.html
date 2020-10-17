@@ -1,0 +1,25 @@
+<form action="/generator/result/" method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Generate">
+</form>
+
+<script type="text/javascript">
+    var select = document.getElementById("id_gene_load_method");
+    var methods = {"R": 0, "F": 1, "U": 2};
+    var fields = Array.from(document.getElementsByTagName("tr")).slice(1, 4);
+    var lastValue = select.value;
+
+    for (var field of fields) {
+        field.hidden = true;
+    }
+    fields[methods[lastValue]].hidden = false;
+
+    select.addEventListener("change", () => {
+        fields[methods[lastValue]].hidden = true;
+        fields[methods[select.value]].hidden = false;
+        lastValue = select.value;
+    });
+</script>
