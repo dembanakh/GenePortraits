@@ -18,12 +18,9 @@ def extract_gene(data: dict, files: dict) -> str:
         return data['gene_raw']
     elif method == 'F':
         bin_code = files['gene_file']
-        code = bin_code.read().decode('utf8').strip()
+        code = ''.join(bin_code.read().decode('utf8').strip().split('\n')[1:])
         bin_code.close()
-        line = code.readline()
-        gene_data = code.read().replace(line, '').replace('\n', '')
-        gene_data = gene_data.upper()
-        return ''.join(c for c in gene_data if c in Alphabet)
+        return ''.join(c for c in code.upper() if c in Alphabet)
     elif method == 'U':
         pass
     raise ValueError('gene_load_method is not from the set {R, F, U}')
