@@ -12,12 +12,17 @@ def generate(gene: str, depth: int, mod: int, remainder: int, size: int, contras
     return image
 
 
-def extract_gene(data: dict) -> str:
+def extract_gene(data: dict, files: dict) -> str:
     method = data['gene_load_method']
     if method == 'R':
         return data['gene_raw']
     elif method == 'F':
-        pass
+        code = files['Gene']
+        line = code.readline()
+        gene_data = code.read().replace(line, '').replace('\n', '')
+        code.close()
+        gene_data = gene_data.upper()
+        return ''.join(c for c in gene_data if c in Alphabet)
     elif method == 'U':
         pass
     raise ValueError('gene_load_method is not from the set {R, F, U}')

@@ -22,7 +22,7 @@ def result(request):
         form = GeneratorForm(request.POST)
         if form.is_valid():
             data: dict = form.cleaned_data
-            gene = extract_gene(data)
+            gene = extract_gene(data, request.FILES)
             image = generate(gene, data["depth"], data["mod"], data["remainder"],
                              data["size"], data["contrast"])
             buffer = BytesIO()
