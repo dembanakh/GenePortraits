@@ -46,7 +46,7 @@ class GeneratorForm(forms.Form):
         remainder = self.cleaned_data['remainder']
         mod = self.cleaned_data['mod']
 
-        if mod > remainder:
+        if mod < remainder:
             raise ValidationError(_('Remainder must be in range [0, Mod]'))
 
         return remainder
