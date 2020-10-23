@@ -24,7 +24,7 @@ def result(request):
             data: dict = form.cleaned_data
             gene = extract_gene(data, request.FILES)
             image = generate(gene, data["depth"], data["mod"], data["remainder"],
-                             data["size"], data["contrast"])
+                             data["size"], data["contrast"], data["frame"])
             buffer = BytesIO()
             image.save(buffer, "PNG")
             image_str = base64.b64encode(buffer.getvalue()).decode()
