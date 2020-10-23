@@ -1,29 +1,101 @@
 {% load static %}
-{% load myfilters %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/index.css' %}">
 
 <div class="container">
 <form action="/generator/result/" enctype="multipart/form-data" method="post">
     {% csrf_token %}
+    {{ form.non_field_errors }}
     <h1>Frequency Portrait Generator</h1>
     <div class="form-group">
-        {{ form.gene_load_method.errors }}
         {{ form.gene_load_method }}
-        {{ form.gene_load_method.label_tag | addclass:'control-label' }}
+        {{ form.gene_load_method.errors }}
+        {{ form.gene_load_method.label_tag }}
+        <span class="helptext">{{ form.gene_load_method.help_text }}</span>
         <i class="bar"></i>
     </div>
-    <table>
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Generate">
+    <div class="form-group">
+        {{ form.gene_raw }}
+        {{ form.gene_raw.errors }}
+        {{ form.gene_raw.label_tag }}
+        <span class="helptext">{{ form.gene_raw.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    <div class="form-group">
+        {{ form.gene_file }}
+        {{ form.gene_file.errors }}
+        {{ form.gene_file.label_tag }}
+        <span class="helptext">{{ form.gene_file.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    <div class="form-group">
+        {{ form.gene_url }}
+        {{ form.gene_url.errors }}
+        {{ form.gene_url.label_tag }}
+        <span class="helptext">{{ form.gene_url.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+
+    <div class="form-inline">
+    <div class="form-group">
+        {{ form.mod }}
+        {{ form.mod.errors }}
+        {{ form.mod.label_tag }}
+        <span class="helptext">{{ form.mod.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    <div class="form-group">
+        {{ form.remainder }}
+        {{ form.remainder.errors }}
+        {{ form.remainder.label_tag }}
+        <span class="helptext">{{ form.remainder.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    <div class="form-group">
+        {{ form.depth }}
+        {{ form.depth.errors }}
+        {{ form.depth.label_tag }}
+        <span class="helptext">{{ form.depth.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    <div class="form-group">
+        {{ form.size }}
+        {{ form.size.errors }}
+        {{ form.size.label_tag }}
+        <span class="helptext">{{ form.size.help_text }}</span>
+        <i class="bar"></i>
+    </div>
+    </div>
+
+    <div class="form-inline">
+    <div class="checkbox">
+        <label for="{{ form.contrast.auto_id }}">
+            {{ form.contrast }}
+            <i class="helper"></i>
+            {{ form.contrast.label }}
+        </label>
+        <span class="helptext">{{ form.contrast.help_text }}</span>
+    </div>
+    <div class="checkbox">
+        <label for="{{ form.frame.auto_id }}">
+            {{ form.frame }}
+            <i class="helper"></i>
+            {{ form.frame.label }}
+        </label>
+        <span class="helptext">{{ form.frame.help_text }}</span>
+    </div>
+    </div>
+
+    <div class="button-container">
+        <button class="button"><span>Generate</span></button>
+    </div>
 </form>
 </div>
 
 <script type="text/javascript">
     var select = document.getElementById("id_gene_load_method");
     var methods = {"R": 0, "F": 1, "U": 2};
-    var fields = Array.from(document.getElementsByTagName("tr")).slice(1, 4);
+    var fields = Array.from(document.getElementsByClassName("form-group")).slice(1, 4);
     var lastValue = select.value;
 
     window.addEventListener("pageshow", () => {

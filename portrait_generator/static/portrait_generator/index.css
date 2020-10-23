@@ -78,6 +78,7 @@ fieldset {
 }
 
 .form-inline > .form-group,
+.form-inline > .checkbox,
 .form-inline > .btn {
   display: inline-block;
   margin-bottom: 0;
@@ -88,6 +89,9 @@ fieldset {
   margin-left: 0.125rem;
   color: #b3b3b3;
   font-size: 0.8rem;
+}
+.checkbox {
+    margin-right: 6rem;
 }
 .checkbox .form-help, .form-radio .form-help, .form-group .form-help {
   position: absolute;
@@ -118,7 +122,7 @@ fieldset {
   line-height: 1.6;
   box-shadow: none;
 }
-.form-group .control-label {
+.form-group label {
   position: absolute;
   top: 0.25rem;
   pointer-events: none;
@@ -179,15 +183,15 @@ fieldset {
 .form-group textarea.has-value {
   color: #333;
 }
-.form-group select ~ .control-label,
-.form-group input:focus ~ .control-label,
-.form-group input:valid ~ .control-label,
-.form-group input.form-file ~ .control-label,
-.form-group input.has-value ~ .control-label,
-.form-group textarea:focus ~ .control-label,
-.form-group textarea:valid ~ .control-label,
-.form-group textarea.form-file ~ .control-label,
-.form-group textarea.has-value ~ .control-label {
+.form-group select ~ label,
+.form-group input:focus ~ label,
+.form-group input:valid ~ label,
+.form-group input.form-file ~ label,
+.form-group input.has-value ~ label,
+.form-group textarea:focus ~ label,
+.form-group textarea:valid ~ label,
+.form-group textarea.form-file ~ label,
+.form-group textarea.has-value ~ label {
   font-size: 0.8rem;
   color: gray;
   top: -1rem;
@@ -198,9 +202,9 @@ fieldset {
 .form-group textarea:focus {
   outline: none;
 }
-.form-group select:focus ~ .control-label,
-.form-group input:focus ~ .control-label,
-.form-group textarea:focus ~ .control-label {
+.form-group select:focus ~ label,
+.form-group input:focus ~ label,
+.form-group textarea:focus ~ label {
   color: #337ab7;
 }
 .form-group select:focus ~ .bar::before,
@@ -344,7 +348,7 @@ fieldset {
   margin-top: 1rem;
 }
 
-.has-error .legend.legend, .has-error.form-group .control-label.control-label {
+.has-error .legend.legend, .has-error.form-group labellabel {
   color: #d9534f;
 }
 .has-error.form-group .form-help,
