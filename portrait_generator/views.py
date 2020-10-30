@@ -64,7 +64,7 @@ def repository(request):
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
 
 
-def track_user(request):
+def track_user_1(request):
     if not request.COOKIES.get('visits'):
         response = HttpResponse("This is your first visit to the site. "
                                 "From now on I will track your vistis to this site.")
@@ -73,6 +73,12 @@ def track_user(request):
         visits = int(request.COOKIES.get('visits')) + 1
         response = HttpResponse("This is your {0} visit".format(visits))
         response.set_cookie('visits', str(visits),  3600 * 24 * 365 * 2)
+    return response
+
+
+def track_user_2(request):
+    visits = int(request.COOKIES.get('visits'))
+    response = HttpResponse("This is your {0} visit".format(visits))
     return response
 
 
