@@ -43,11 +43,14 @@ def result(request):
                         .render({'num_generated_images': len(generated_images),
                                  'generated_images': generated_images}, request)
                 )
-            if 'saved_images' in request.COOKIES:
-                response.delete_cookie('saved_images')
-                response.set_cookie('saved_images', request.COOKIES['saved_images'] + ',' + ','.join(generated_images))
+            if 'num_saved_images' in request.COOKIES:
+                last = int(request.COOKIES['num_saved_images'])
             else:
-                response.set_cookie('saved_images', ','.join(generated_images))
+                last = 0
+            for img in generated_images:
+                response.set_cookie('saved_image_' + str(last), img)
+                last += 1
+            response.set_cookie('num_saved_images', str(last))
             return response
 
     return Http404()
@@ -58,28 +61,12 @@ def repository(request):
         return Http404()
 
     images = []
-    if 'saved_images' in request.COOKIES:
-        images = request.COOKIES['saved_images'].split(',')
+    if 'num_saved_images' in request.COOKIES:
+        num_saved_images = request.COOKIES['num_saved_images']
+        for i in range(num_saved_images):
+            images.append(request.COOKIES['saved_image_' + str(i)])
 
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
-
-
-def track_user_1(request):
-    if not request.COOKIES.get('visits'):
-        response = HttpResponse("This is your first visit to the site. "
-                                "From now on I will track your vistis to this site.")
-        response.set_cookie('visits', '1', 3600 * 24 * 365 * 2)
-    else:
-        visits = int(request.COOKIES.get('visits')) + 1
-        response = HttpResponse("This is your {0} visit".format(visits))
-        response.set_cookie('visits', str(visits),  3600 * 24 * 365 * 2)
-    return response
-
-
-def track_user_2(request):
-    visits = int(request.COOKIES.get('visits'))
-    response = HttpResponse("This is your {0} visit".format(visits))
-    return response
 
 
 def generate_one_image(gene, depth, mod, remainder, size, contrast, frame) -> str:
