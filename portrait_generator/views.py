@@ -46,7 +46,7 @@ def result(request):
             if 'saved_images' not in request.COOKIES:
                 response.set_cookie('saved_images', ','.join(generated_images))
             else:
-                response.set_cookie('saved_images', request.COOKIES['saved_images'] + ','.join(generated_images))
+                response.set_cookie('saved_images', request.COOKIES['saved_images'] + ',' + ','.join(generated_images))
             return response
 
     return Http404()
