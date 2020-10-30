@@ -43,11 +43,11 @@ def result(request):
                         .render({'num_generated_images': len(generated_images),
                                  'generated_images': generated_images}, request)
                 )
-            print(len(request.COOKIES['saved_images'].split(',')))
             if 'saved_images' not in request.COOKIES:
                 response.set_cookie('saved_images', ','.join(generated_images))
             else:
                 response.set_cookie('saved_images', request.COOKIES['saved_images'] + ',' + ','.join(generated_images))
+            print(len((request.COOKIES['saved_images'] + ',' + ','.join(generated_images)).split(',')))
             return response
 
     return Http404()
