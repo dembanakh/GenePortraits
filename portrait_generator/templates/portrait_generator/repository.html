@@ -1,10 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Repository</title>
+</head>
+<body>
+
 <div class="container">
 
 </div>
 
+</body>
+</html>
+
 <script type="text/javascript">
     var container = document.getElementsByClassName("container")[0];
-    {% for image in generated_images %}
+    {% for image in images %}
         var node = document.createElement("DIV");
         var img = document.createElement("IMG");
         node.appendChild(img);

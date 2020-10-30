@@ -1,6 +1,12 @@
-{% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/index.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Frequency Generator</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/index.css' %}">
+</head>
+<body>
 
 <div class="container">
 <form action="/generator/result/" enctype="multipart/form-data" method="post">
@@ -92,6 +98,9 @@
 </form>
 </div>
 
+</body>
+</html>
+
 <script type="text/javascript">
     var select = document.getElementById("id_gene_load_method");
     var methods = {"R": 0, "F": 1, "U": 2};
@@ -99,7 +108,8 @@
     var lastValue = select.value;
 
     window.addEventListener("pageshow", () => {
-        select.value = "R";
+        //select.value = "R";
+        lastValue = select.value;
         for (var field of fields) {
             field.hidden = true;
         }

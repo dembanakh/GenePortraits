@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='generator'),
-    path('result/', views.result, name='generator_result')
+    path('result/', views.result, name='generator_result'),
+    path('repository/', views.repository, name='repository')
 ]
