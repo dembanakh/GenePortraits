@@ -43,7 +43,7 @@ def result(request):
                         .render({'num_generated_images': len(generated_images),
                                  'generated_images': generated_images}, request)
                 )
-            print('saved_images' in request.COOKIES)
+            print(len(request.COOKIES['saved_images'].split(',')))
             if 'saved_images' not in request.COOKIES:
                 response.set_cookie('saved_images', ','.join(generated_images))
             else:
@@ -60,6 +60,8 @@ def repository(request):
     images = []
     if 'saved_images' in request.COOKIES:
         images = request.COOKIES['saved_images'].split(',')
+
+    print(len(images))
 
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
 
