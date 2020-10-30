@@ -62,7 +62,7 @@ def repository(request):
 
     images = []
     if 'num_saved_images' in request.COOKIES:
-        num_saved_images = request.COOKIES['num_saved_images']
+        num_saved_images = int(request.COOKIES['num_saved_images'])
         for i in range(num_saved_images):
             images.append(request.COOKIES['saved_image_' + str(i)])
 
