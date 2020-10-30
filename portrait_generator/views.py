@@ -58,7 +58,7 @@ def repository(request):
 
     images = []
     if 'saved_images' in request.COOKIES:
-        images = request.COOKIES['saved_images']
+        images = request.COOKIES['saved_images'].split(',')
 
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
 
