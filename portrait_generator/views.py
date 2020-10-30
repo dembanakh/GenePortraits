@@ -23,13 +23,33 @@ def result(request):
         if form.is_valid():
             data: dict = form.cleaned_data
             gene = extract_gene(data, request.FILES)
-            image = generate(gene, data["depth"], data["mod"], data["remainder"],
-                             data["size"], data["contrast"], data["frame"])
-            buffer = BytesIO()
-            image.save(buffer, "PNG")
-            image_str = base64.b64encode(buffer.getvalue()).decode()
-            buffer.close()
-            return HttpResponse(
-                loader.get_template('portrait_generator/result.html').render({'generated_image': image_str},
-                                                                             request))
+            mod, rem = data["mod"], data["remainder"]
+            if mod > rem:
+                return HttpResponse(
+                    loader.get_template('portrait_generator/result.html')
+                        .render({'num_generated_images': 1,
+                                 'generated_images': [generate_one_image(gene, data["depth"],
+                                                                         data["mod"], data["remainder"],
+                                                                         data["size"], data["contrast"],
+                                                                         data["frame"])]}, request))
+            else:
+                depth, size, contrast, frame = data["depth"], data["size"], data["contrast"], data["frame"]
+                images = []
+                for i in range(mod):
+                    images.append(generate_one_image(gene, depth, mod, i, size, contrast, frame))
+                return HttpResponse(
+                    loader.get_template('portrait_generator/result.html')
+                        .render({'num_generated_images': len(images),
+                                 'generated_images': images}, request)
+                )
+
     return Http404()
+
+
+def generate_one_image(gene, depth, mod, remainder, size, contrast, frame) -> str:
+    image = generate(gene, depth, mod, remainder, size, contrast, frame)
+    buffer = BytesIO()
+    image.save(buffer, "PNG")
+    image_str = base64.b64encode(buffer.getvalue()).decode()
+    buffer.close()
+    return image_str

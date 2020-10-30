@@ -96,7 +96,7 @@ Alphabet = {"A", "C", "G", "T"}
 Xletter = {"T": 0, "C": 0, "A": 1, "G": 1}
 Yletter = {"T": 0, "C": 1, "A": 1, "G": 0}
 
-
+'''
 def fractal_portrait(gene, size: int) -> np.array:
     matrix = np.zeros((size, size))
     x = 1/2
@@ -118,3 +118,4 @@ def fractal_measure_portrait(gene, size:int) -> np.array:
         matrix[min(size - 1, int(size * x)), min(size - 1, int(size * y))] += 1
     matrix *= 1/matrix.max()
     return matrix
+'''

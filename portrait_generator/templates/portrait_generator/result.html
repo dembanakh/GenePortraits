@@ -1,2 +1,12 @@
-<p>Generated image:</p>
-<img src="data:image/png;base64,{{ generated_image }}">
+<div class="container">
+
+</div>
+
+<script type="text/javascript">
+    var container = document.getElementsByClassName("container")[0];
+    {% for image in generated_images %}
+        var node = document.createElement("IMG");
+        node.setAttribute("src", "data:image/png;base64,{{ image }}");
+        container.appendChild(node);
+    {% endfor %}
+</script>
