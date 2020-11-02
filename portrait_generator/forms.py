@@ -8,12 +8,12 @@ class GeneratorForm(forms.Form):
     gene_raw = forms.CharField(label='Gene', required=False)
     gene_file = forms.FileField(label='Gene', required=False)
     gene_url = forms.URLField(label='Gene', required=False)
-    depth = forms.IntegerField(label='Depth', min_value=0)
+    depth = forms.IntegerField(label='Depth', min_value=0, initial=3)
     mod = forms.IntegerField(label='Mod', min_value=1, initial=1)
     remainder = forms.IntegerField(label='Remainder', min_value=0, initial=0)
     size = forms.IntegerField(label='Size', initial=256)
     contrast = forms.BooleanField(label='Contrast', required=False)
-    frame = forms.BooleanField(label='Frame', required=False)
+    frame = forms.BooleanField(label='Frame', required=False, initial=True)
 
     def clean_gene_raw(self):
         method = self.cleaned_data['gene_load_method']
