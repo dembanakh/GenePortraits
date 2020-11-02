@@ -1,32 +1,57 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Frequency Generator</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/result.css' %}">
+</head>
+<body>
 
+<div style="display: table;">
+    <div id="container">
+
+    </div>
 </div>
 
+</body>
+</html>
+
 <script type="text/javascript">
-    var container = document.getElementsByClassName("container")[0];
+    var container = document.getElementById("container");
     var flag = false;
+    var imgSize = 0;
     {% for image in generated_images %}
         var node = document.createElement("DIV");
-        if (!flag) {
-            flag = true;
+        node.className = "img";
+        if (flag == true) {
             var plus = document.createElement("B");
+            plus.className = "img";
             plus.appendChild(document.createTextNode("+"));
-            node.appendChild(plus);
+            container.appendChild(plus);
+            imgSize += plus.getBoundingClientRect().width;
         }
         var img = document.createElement("IMG");
         node.appendChild(img);
         img.setAttribute("src", "data:image/png;base64,{{ image }}");
         container.appendChild(node);
+        flag = true;
+        imgSize += node.getBoundingClientRect().width;
     {% endfor %}
 
-    if ({{ gene_10 }} != null) {
+    {% if gene_10 is not None %}
         var node = document.createElement("DIV");
+        node.className = "img";
         var eq = document.createElement("B");
+        eq.className = "img";
         eq.appendChild(document.createTextNode("="));
-        node.appendChild(eq);
+        container.appendChild(eq);
+        imgSize += eq.getBoundingClientRect().width;
         var img = document.createElement("IMG");
         node.appendChild(img);
         img.setAttribute("src", "data:image/png;base64,{{ gene_10 }}");
         container.appendChild(node);
-    }
+        imgSize += node.getBoundingClientRect().width;
+    {% endif %}
+
 </script>

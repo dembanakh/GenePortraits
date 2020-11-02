@@ -1,0 +1,18 @@
+#container {
+  display: table-row;
+}
+
+.img {
+  display: table-cell;
+}
+
+b.img:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+}
+
+b.img {
+  vertical-align: middle;
+}
+
