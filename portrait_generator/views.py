@@ -31,8 +31,7 @@ def result(request):
                                                        data["frame"])]
                 response = HttpResponse(
                     loader.get_template('portrait_generator/result.html')
-                        .render({'num_generated_images': 1,
-                                 'generated_images': generated_images}, request))
+                        .render({'gene_10': None, 'generated_images': generated_images}, request))
             else:
                 depth, size, contrast, frame = data["depth"], data["size"], data["contrast"], data["frame"]
                 generated_images = []
@@ -40,7 +39,7 @@ def result(request):
                     generated_images.append(generate_one_image(gene, depth, mod, i, size, contrast, frame))
                 response = HttpResponse(
                     loader.get_template('portrait_generator/result.html')
-                        .render({'num_generated_images': len(generated_images),
+                        .render({'gene_10': generate_one_image(gene, depth, 1, 0, size, contrast, frame),
                                  'generated_images': generated_images}, request)
                 )
             if 'num_saved_images' in request.COOKIES:

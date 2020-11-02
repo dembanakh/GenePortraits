@@ -4,11 +4,27 @@
 
 <script type="text/javascript">
     var container = document.getElementsByClassName("container")[0];
-    {% for image in generated_images %}
+    {% for i, image in enumerate(generated_images) %}
         var node = document.createElement("DIV");
+        if ({{ i }} != 0) {
+            var plus = document.createElement("B");
+            plus.appendChild(document.createTextNode("+"));
+            node.appendChild(plus);
+        }
         var img = document.createElement("IMG");
         node.appendChild(img);
         img.setAttribute("src", "data:image/png;base64,{{ image }}");
         container.appendChild(node);
     {% endfor %}
+
+    if ({{ gene_10 }} != null) {
+        var node = document.createElement("DIV");
+        var eq = document.createElement("B");
+        eq.appendChild(document.createTextNode("="));
+        node.appendChild(eq);
+        var img = document.createElement("IMG");
+        node.appendChild(img);
+        img.setAttribute("src", "data:image/png;base64,{{ gene_10 }}");
+        container.appendChild(node);
+    }
 </script>
