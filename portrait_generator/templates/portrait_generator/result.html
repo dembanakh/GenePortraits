@@ -4,9 +4,11 @@
 
 <script type="text/javascript">
     var container = document.getElementsByClassName("container")[0];
-    {% for i, image in enumerate(generated_images) %}
+    var flag = false;
+    {% for image in generated_images %}
         var node = document.createElement("DIV");
-        if ({{ i }} != 0) {
+        if (!flag) {
+            flag = true;
             var plus = document.createElement("B");
             plus.appendChild(document.createTextNode("+"));
             node.appendChild(plus);
