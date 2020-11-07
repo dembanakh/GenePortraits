@@ -15,59 +15,60 @@
 </p>
 <p>Depth: {{ depth }}</p>
 <p>Size: {{ size }}</p>
-<table>
-    <tr id="imagesNsigns"></tr>
-    <tr id="descriptions"></tr>
-</table>
+<div id="container">
+    <div class="container">
+
+    </div>
+    <div class="container">
+
+    </div>
+</div>
 
 </body>
 </html>
 
 <script type="text/javascript">
-    function addImage(image, mod, remainder, imagesNsigns, descriptions) {
-        var node = document.createElement("TD");
+    function addImage(image, mod, remainder, containers) {
+        var node = document.createElement("DIV");
         node.className = "img";
         var img = document.createElement("IMG");
         node.appendChild(img);
         img.setAttribute("src", "data:image/png;base64," + image);
-        imagesNsigns.appendChild(node);
+        containers[0].appendChild(node);
 
-        var descrNode = document.createElement("TD");
-        descrNode.className = "img";
+        node = document.createElement("DIV");
+        node.className = "img";
         var description = document.createElement("P");
-        descrNode.appendChild(description);
+        node.appendChild(description);
         description.appendChild(document.createTextNode("mod(" + mod + "); remainder(" + remainder + ")"));
         description.setAttribute("style", "text-align: center;");
-        descriptions.appendChild(descrNode);
+        containers[1].appendChild(node);
     }
 
-    function addSign(s, imagesNsigns, descriptions) {
-        var signNode = document.createElement("TD");
-        signNode.className = "img";
+    function addSign(s, containers) {
         var sign = document.createElement("B");
+        sign.className = "img";
         sign.appendChild(document.createTextNode(s));
-        signNode.appendChild(sign);
-        imagesNsigns.appendChild(signNode);
+        containers[0].appendChild(sign);
 
-        var empty = document.createElement("TD");
-        empty.className = "img";
-        descriptions.appendChild(empty);
+        var emptyDiv = document.createElement("DIV");
+        emptyDiv.className = "img";
+        containers[1].appendChild(emptyDiv);
     }
 
-    var tr1 = document.getElementById("imagesNsigns");
-    var tr2 = document.getElementById("descriptions");
+    var containers = document.getElementsByClassName("container");
     var flag = false;
     {% for image, mod, rem in generated_images %}
         if (flag == true) {
-            addSign("+", tr1, tr2);
+            addSign("+", containers);
         }
-        addImage("{{ image }}", "{{ mod }}", "{{ rem }}", tr1, tr2);
+        addImage("{{ image }}", "{{ mod }}", "{{ rem }}", containers);
         flag = true;
     {% endfor %}
 
     {% if gene_10 is not None %}
-        addSign("=", tr1, tr2);
-        addImage("{{ gene_10 }}", 1, 0, tr1, tr2);
+        addSign("=", containers);
+        addImage("{{ gene_10 }}", 1, 0, containers);
     {% endif %}
 
 </script>

@@ -1,0 +1,30 @@
+#container {
+  display: table;
+}
+
+#container > .container {
+  vertical-align: middle;
+}
+
+.container {
+  display: table-row;
+  vertical-align: inherit;
+  width: 100%;
+}
+
+.img {
+  display: table-cell;
+  vertical-align: inherit;
+  width: 100px;
+}
+
+b.img:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+}
+
+b.img {
+  vertical-align: middle;
+}
+

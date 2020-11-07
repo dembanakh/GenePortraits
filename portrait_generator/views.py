@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import base64
 from io import BytesIO
 
@@ -31,7 +33,8 @@ def result(request):
                                                        data["frame"])]
                 response = HttpResponse(
                     loader.get_template('portrait_generator/result.html')
-                        .render({'gene_10': None, 'generated_images': generated_images}, request))
+                        .render({'gene_10': None, 'generated_images': generated_images,
+                                 'gene': gene, 'depth': data["depth"], 'size': data["size"]}, request))
             else:
                 depth, size, contrast, frame = data["depth"], data["size"], data["contrast"], data["frame"]
                 generated_images = []
@@ -39,8 +42,9 @@ def result(request):
                     generated_images.append(generate_one_image(gene, depth, mod, i, size, contrast, frame))
                 response = HttpResponse(
                     loader.get_template('portrait_generator/result.html')
-                        .render({'gene_10': generate_one_image(gene, depth, 1, 0, size, contrast, frame),
-                                 'generated_images': generated_images}, request)
+                        .render({'gene_10': generate_one_image(gene, depth, 1, 0, size, contrast, frame)[0],
+                                 'generated_images': generated_images,
+                                 'gene': gene, 'depth': data["depth"], 'size': data["size"]}, request)
                 )
             if 'num_saved_images' in request.COOKIES:
                 last = int(request.COOKIES['num_saved_images'])
@@ -68,10 +72,10 @@ def repository(request):
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
 
 
-def generate_one_image(gene, depth, mod, remainder, size, contrast, frame) -> str:
+def generate_one_image(gene, depth, mod, remainder, size, contrast, frame) -> Tuple[str, int, int]:
     image = generate(gene, depth, mod, remainder, size, contrast, frame)
     buffer = BytesIO()
     image.save(buffer, "PNG")
     image_str = base64.b64encode(buffer.getvalue()).decode()
     buffer.close()
-    return image_str
+    return image_str, mod, remainder

@@ -1,11 +1,3 @@
-#container {
-  display: table-row;
-}
-
-.img {
-  display: table-cell;
-}
-
 b.img:before {
   content: '';
   display: inline-block;
