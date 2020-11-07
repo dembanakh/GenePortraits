@@ -50,10 +50,11 @@ def result(request):
                 last = int(request.COOKIES['num_saved_images'])
             else:
                 last = 0
-            for img in generated_images:
-                response.set_cookie('saved_image_' + str(last), img)
-                last += 1
-            response.set_cookie('num_saved_images', str(last))
+            current = last
+            for img, mod, rem in generated_images:
+                response.set_cookie('saved_image_' + str(current), img + ',' + str(mod) + ',' + str(rem) + ',' + str(last))
+                current += 1
+            response.set_cookie('num_saved_images', str(current))
             return response
 
     return Http404()
@@ -67,7 +68,7 @@ def repository(request):
     if 'num_saved_images' in request.COOKIES:
         num_saved_images = int(request.COOKIES['num_saved_images'])
         for i in range(num_saved_images):
-            images.append(request.COOKIES['saved_image_' + str(i)])
+            images.append(request.COOKIES['saved_image_' + str(i)].split(','))
 
     return HttpResponse(loader.get_template('portrait_generator/repository.html').render({'images': images}, request))
 

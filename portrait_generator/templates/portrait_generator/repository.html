@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<p>Repository</p>
+
 <div class="container">
 
 </div>
@@ -14,12 +16,60 @@
 </html>
 
 <script type="text/javascript">
-    var container = document.getElementsByClassName("container")[0];
-    {% for image in images %}
-        var node = document.createElement("DIV");
+    function newTable(container) {
+        var table = document.createElement("TABLE");
+        var row1 = document.createElement("TR");
+        var row2 = document.createElement("TR");
+        table.appendChild(row1);
+        table.appendChild(row2);
+        container.appendChild(table);
+        return table;
+    }
+
+    function addImage(image, mod, remainder, imagesNsigns, descriptions) {
+        var node = document.createElement("TD");
+        node.className = "img";
         var img = document.createElement("IMG");
         node.appendChild(img);
-        img.setAttribute("src", "data:image/png;base64,{{ image }}");
-        container.appendChild(node);
+        img.setAttribute("src", "data:image/png;base64," + image);
+        imagesNsigns.appendChild(node);
+
+        var descrNode = document.createElement("TD");
+        descrNode.className = "img";
+        var description = document.createElement("P");
+        descrNode.appendChild(description);
+        description.appendChild(document.createTextNode("mod(" + mod + "); remainder(" + remainder + ")"));
+        description.setAttribute("style", "text-align: center;");
+        descriptions.appendChild(descrNode);
+    }
+
+    function addSign(s, imagesNsigns, descriptions) {
+        var signNode = document.createElement("TD");
+        signNode.className = "img";
+        var sign = document.createElement("B");
+        sign.appendChild(document.createTextNode(s));
+        signNode.appendChild(sign);
+        imagesNsigns.appendChild(signNode);
+
+        var empty = document.createElement("TD");
+        empty.className = "img";
+        descriptions.appendChild(empty);
+    }
+
+    var container = document.getElementsByClassName("container")[0];
+    var table, row1, row2;
+    var lastID = "";
+    {% for image, mod, rem, id in images %}
+        if (lastID === "{{ id }}") {
+            addSign("+", row1, row2);
+            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", row1, row2);
+        } else {
+            lastID = "{{ id }}";
+            container.appendChild(document.createElement("HR"));
+            table = newTable(container);
+            [row1, row2] = [].slice.call(table.getElementsByTagName("tr"));
+
+            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", row1, row2);
+        }
     {% endfor %}
 </script>
