@@ -57,7 +57,7 @@
     var tr1 = document.getElementById("imagesNsigns");
     var tr2 = document.getElementById("descriptions");
     var flag = false;
-    {% for image, mod, rem in generated_images %}
+    {% for gene, mod, rem, depth, size, contrast, frame, image in generated_images %}
         if (flag == true) {
             addSign("+", tr1, tr2);
         }
