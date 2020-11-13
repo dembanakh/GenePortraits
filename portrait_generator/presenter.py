@@ -20,8 +20,11 @@ def get_repository_cookies(cookies):
 
 
 def add_to_database(user, portraits):
-    last = UserFrequencyPortrait.objects.latest('generation_id').generation_id
-    last += 1
+    try:
+        last = UserFrequencyPortrait.objects.latest('generation_id').generation_id + 1
+    except UserFrequencyPortrait.DoesNotExist:
+        last = 0
+
     for gene, mod, rem, depth, size, contrast, frame, portrait in portraits:
         fp = get_portrait(gene=gene, mod=mod, remainder=rem, depth=depth, size=size,
                           contrast=contrast, frame=frame)
