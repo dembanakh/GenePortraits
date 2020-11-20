@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Repository</title>
-</head>
-<body>
+{% extends 'home/base.html' %}
+{% load static %}
 
+{% block extra_head %}
+
+{% endblock %}
+
+{% block title %}Repository{% endblock %}
+
+{% block content %}
 <p>Repository</p>
 
-<div class="container">
+<div id="content">
 
 </div>
+{% endblock %}
 
-</body>
-</html>
-
+{% block script %}
 <script type="text/javascript">
     function newTable(container) {
         var table = document.createElement("TABLE");
@@ -26,7 +27,7 @@
         return table;
     }
 
-    function addImage(image, mod, remainder, imagesNsigns, descriptions) {
+    function addImage(image, mod, remainder, depth, size, imagesNsigns, descriptions) {
         var node = document.createElement("TD");
         node.className = "img";
         var img = document.createElement("IMG");
@@ -38,7 +39,11 @@
         descrNode.className = "img";
         var description = document.createElement("P");
         descrNode.appendChild(description);
-        description.appendChild(document.createTextNode("mod(" + mod + "); remainder(" + remainder + ")"));
+        var descr = "mod(" + mod + "); ";
+        descr += "remainder(" + remainder + "); ";
+        descr += "depth(" + depth + "); ";
+        descr += "size(" + size + ")";
+        description.appendChild(document.createTextNode(descr));
         description.setAttribute("style", "text-align: center;");
         descriptions.appendChild(descrNode);
     }
@@ -56,20 +61,21 @@
         descriptions.appendChild(empty);
     }
 
-    var container = document.getElementsByClassName("container")[0];
+    var container = document.getElementById("content");
     var table, row1, row2;
     var lastID = "";
-    {% for image, mod, rem, id in images %}
+    {% for image, mod, rem, depth, size, id in images %}
         if (lastID === "{{ id }}") {
             addSign("+", row1, row2);
-            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", row1, row2);
+            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", "{{ depth }}", "{{ size }}", row1, row2);
         } else {
             lastID = "{{ id }}";
             container.appendChild(document.createElement("HR"));
             table = newTable(container);
             [row1, row2] = [].slice.call(table.getElementsByTagName("tr"));
 
-            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", row1, row2);
+            addImage("{{ image }}", "{{ mod }}", "{{ rem }}", "{{ depth }}", "{{ size }}", row1, row2);
         }
     {% endfor %}
 </script>
+{% endblock %}

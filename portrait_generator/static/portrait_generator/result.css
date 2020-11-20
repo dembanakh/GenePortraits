@@ -1,10 +1,10 @@
-b.img:before {
+main b.img:before {
   content: '';
   display: inline-block;
   height: 100%;
 }
 
-b.img {
+main b.img {
   vertical-align: middle;
 }
 

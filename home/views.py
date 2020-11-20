@@ -6,10 +6,7 @@ from django.template import loader
 
 
 def home(request):
-    username = 'world'
-    if hasattr(request, 'user') and request.user.is_authenticated:
-        username = request.user.username
-    return HttpResponse(loader.get_template('home/index.html').render({'username': username}, request))
+    return HttpResponse(loader.get_template('home/index.html').render({}, request))
 
 
 def signup(request):

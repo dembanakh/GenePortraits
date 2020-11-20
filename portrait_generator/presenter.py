@@ -6,7 +6,7 @@ def get_repository_database(user):
     images = []
     for userFP in portraits:
         images.append([userFP.portrait.portrait, str(userFP.portrait.mod), str(userFP.portrait.remainder),
-                       userFP.generation_id])
+                       str(userFP.portrait.depth), str(userFP.portrait.size), userFP.generation_id])
     return images
 
 
@@ -42,11 +42,11 @@ def add_to_cookies(cookies, portraits, response):
         last = 0
     current = last
     for gene, mod, rem, depth, size, contrast, frame, portrait in portraits:
-        response.set_cookie('saved_image_' + str(current), portrait + ',' + str(mod) + ',' + str(rem) + ',' + str(last))
+        response.set_cookie('saved_image_' + str(current), ','.join(map(str, [portrait, mod, rem, depth, size, last])))
         current += 1
     response.set_cookie('num_saved_images', str(current))
 
 
 def get_portrait(gene, mod, remainder, depth, size, contrast, frame) -> FrequencyPortrait:
     return FrequencyPortrait.objects.filter(gene=gene, mod=mod, remainder=remainder, depth=depth,
-                                                size=size, contrast=contrast, frame=frame).first()
+                                            size=size, contrast=contrast, frame=frame).first()

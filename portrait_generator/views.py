@@ -41,6 +41,7 @@ def result(request):
                 response = HttpResponse(
                     loader.get_template('portrait_generator/result.html')
                         .render({'gene_10': generate_one_image(gene, depth, 1, 0, size, contrast, frame),
+                                 'gene_10_depth': depth, 'gene_10_size': size,
                                  'generated_images': generated_images,
                                  'gene': gene, 'depth': depth, 'size': size}, request)
                 )

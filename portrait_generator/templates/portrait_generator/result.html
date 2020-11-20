@@ -1,30 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>Frequency Generator</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/result.css' %}">
-</head>
-<body>
+{% extends 'home/base.html' %}
+{% load static %}
 
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/result.css' %}">
+{% endblock %}
+
+{% block title %}Result{% endblock %}
+
+{% block content %}
 <p>
     <label for="gene_textarea">Gene: </label>
     <br>
-    <textarea disabled id="gene_textarea" rows="2" style="white-space: nowrap; width: 100%; overflow-y: hidden; resize: none;">{{ gene }}</textarea>
+    <textarea disabled id="gene_textarea" rows="2" style="white-space: nowrap; width: 95%; overflow-y: hidden; resize: none;">{{ gene }}</textarea>
 </p>
-<p>Depth: {{ depth }}</p>
-<p>Size: {{ size }}</p>
+<!--<p>Depth: {{ depth }}</p>
+<p>Size: {{ size }}</p>-->
 <table>
     <tr id="imagesNsigns"></tr>
     <tr id="descriptions"></tr>
 </table>
+{% endblock %}
 
-</body>
-</html>
-
+{% block script %}
 <script type="text/javascript">
-    function addImage(image, mod, remainder, imagesNsigns, descriptions) {
+    function addImage(image, mod, remainder, depth, size, imagesNsigns, descriptions) {
         var node = document.createElement("TD");
         node.className = "img";
         var img = document.createElement("IMG");
@@ -36,7 +35,11 @@
         descrNode.className = "img";
         var description = document.createElement("P");
         descrNode.appendChild(description);
-        description.appendChild(document.createTextNode("mod(" + mod + "); remainder(" + remainder + ")"));
+        var descr = "mod(" + mod + "); ";
+        descr += "remainder(" + remainder + "); ";
+        descr += "depth(" + depth + "); ";
+        descr += "size(" + size + ")";
+        description.appendChild(document.createTextNode(descr));
         description.setAttribute("style", "text-align: center;");
         descriptions.appendChild(descrNode);
     }
@@ -61,13 +64,14 @@
         if (flag == true) {
             addSign("+", tr1, tr2);
         }
-        addImage("{{ image }}", "{{ mod }}", "{{ rem }}", tr1, tr2);
+        addImage("{{ image }}", "{{ mod }}", "{{ rem }}", "{{ depth }}", "{{ size }}", tr1, tr2);
         flag = true;
     {% endfor %}
 
     {% if gene_10 is not None %}
         addSign("=", tr1, tr2);
-        addImage("{{ gene_10 }}", 1, 0, tr1, tr2);
+        addImage("{{ gene_10 }}", 1, 0, "{{ gene_10_depth }}", "{{ gene_10_size }}", tr1, tr2);
     {% endif %}
 
 </script>
+{% endblock %}

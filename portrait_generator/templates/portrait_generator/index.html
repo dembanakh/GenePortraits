@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <title>Frequency Generator</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/index.css' %}">
-</head>
-<body>
+{% extends 'home/base.html' %}
+{% load static %}
 
-<div class="container">
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'portrait_generator/index.css' %}">
+{% endblock %}
+
+{% block title %}Frequency Generator{% endblock %}
+
+{% block content %}
+<div id="content">
 <form action="/generator/result/" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form.non_field_errors }}
@@ -97,10 +97,9 @@
     </div>
 </form>
 </div>
+{% endblock %}
 
-</body>
-</html>
-
+{% block script %}
 <script type="text/javascript">
     var select = document.getElementById("id_gene_load_method");
     var methods = {"R": 0, "F": 1, "U": 2};
@@ -122,3 +121,4 @@
         lastValue = select.value;
     });
 </script>
+{% endblock %}

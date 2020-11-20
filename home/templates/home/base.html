@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - Gene Portraits</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'home/base.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <div id="header">
+        <h1>Gene Portraits</h1>
+        <nav>
+            <ul class="nav__links">
+                <li><a class="header__link" href="/home/">Home</a></li>
+            </ul>
+        </nav>
+        <div>
+            {% if user.is_authenticated %}
+            <p class="header__right">{{ user.username }}</p>
+            <a class="header__right" href="/logout/"><button class="header__link header__button">Log out</button></a>
+            {% else %}
+            <a class="header__right" href="/login/"><button class="header__link header__button">Log in</button></a>
+            <a class="header__right" href="/signup/"><button class="header__link header__button">Sign up</button></a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
+
+{% block script %}{% endblock %}

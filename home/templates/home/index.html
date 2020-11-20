@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home - Gene Portraits</title>
-</head>
-<body>
+{% extends 'home/base.html' %}
+{% load static %}
 
-<p>Hello, {{ username }}</p>
-<form action="/generator/">
-    <input type="submit" value="Frequency Generator">
-</form>
-<form action="/generator/repository">
-    <input type="submit" value="Repository">
-</form>
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'home/index.css' %}">
+{% endblock %}
 
-</body>
-</html>
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="button-container">
+        <a class="button" href="/generator"><span>Frequency Generator</span></a>
+    </div>
+    <div class="button-container">
+        <a class="button" href="/generator/repository"><span>Repository</span></a>
+    </div>
+</div>
+{% endblock %}

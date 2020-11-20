@@ -1,36 +1,37 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
-body,
+
+main,
 input,
 select,
 textarea,
-body * {
+main * {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
 }
-body::after, body::before,
+main::after, main::before,
 input::after,
 input::before,
 select::after,
 select::before,
 textarea::after,
 textarea::before,
-body *::after,
-body *::before {
+main *::after,
+main *::before {
   box-sizing: border-box;
 }
 
-body {
+main {
   background-image: -webkit-linear-gradient(top, #f2f2f2, #e6e6e6);
   background-image: linear-gradient(top, #f2f2f2, #e6e6e6);
 }
 
-h1 {
+main h1 {
   font-size: 2rem;
   text-align: center;
   margin: 0 0 2em;
 }
 
-.container {
+#content {
   position: relative;
   max-width: 40rem;
   margin: 5rem auto;
@@ -39,7 +40,7 @@ h1 {
   padding: 3rem 5rem 0;
   border-radius: 1px;
 }
-.container::before {
+#content::before {
   content: '';
   position: absolute;
   top: 0;
@@ -55,7 +56,7 @@ h1 {
   transition: transform 0.28s ease-in-out, -webkit-transform 0.28s ease-in-out;
   z-index: -1;
 }
-.container:hover::before {
+#content:hover::before {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
