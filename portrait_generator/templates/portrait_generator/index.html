@@ -21,17 +21,10 @@
         <i class="bar"></i>
     </div>
     <div class="form-group">
-        {{ form.gene_raw }}
-        {{ form.gene_raw.errors }}
-        {{ form.gene_raw.label_tag }}
-        <span class="helptext">{{ form.gene_raw.help_text }}</span>
-        <i class="bar"></i>
-    </div>
-    <div class="form-group">
-        {{ form.gene_file }}
-        {{ form.gene_file.errors }}
-        {{ form.gene_file.label_tag }}
-        <span class="helptext">{{ form.gene_file.help_text }}</span>
+        {{ form.gene_term }}
+        {{ form.gene_term.errors }}
+        {{ form.gene_term.label_tag }}
+        <span class="helptext">{{ form.gene_term.help_text }}</span>
         <i class="bar"></i>
     </div>
     <div class="form-group">
@@ -102,12 +95,11 @@
 {% block script %}
 <script type="text/javascript">
     var select = document.getElementById("id_gene_load_method");
-    var methods = {"R": 0, "F": 1, "U": 2};
-    var fields = Array.from(document.getElementsByClassName("form-group")).slice(1, 4);
+    var methods = {"T": 0, "U": 1};
+    var fields = Array.from(document.getElementsByClassName("form-group")).slice(1, 3);
     var lastValue = select.value;
 
     window.addEventListener("pageshow", () => {
-        //select.value = "R";
         lastValue = select.value;
         for (var field of fields) {
             field.hidden = true;

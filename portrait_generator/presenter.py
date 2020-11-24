@@ -1,4 +1,21 @@
 from .models import FrequencyPortrait, UserFrequencyPortrait
+from .generator import Alphabet
+from .ncbi_api import NCBIAPI
+
+
+def extract_gene(data: dict) -> (str, str):
+    method = data['gene_load_method']
+    if method == 'T':
+        term_description = data['gene_term']
+        parts = term_description.split(':')
+        term = parts[0]
+        gene_id = NCBIAPI.search(term)
+        original = NCBIAPI.fetch(gene_id, parts[1] if len(parts) > 1 else None)
+        code = ''.join(original.strip().split('\n')[1:])
+        return term_description, ''.join(c for c in code.upper() if c in Alphabet)
+    elif method == 'U':
+        return '', ''
+    raise ValueError('gene_load_method is not from the set {T, U}')
 
 
 def get_repository_database(user):
@@ -25,11 +42,11 @@ def add_to_database(user, portraits):
     except UserFrequencyPortrait.DoesNotExist:
         last = 0
 
-    for gene, mod, rem, depth, size, contrast, frame, portrait in portraits:
-        fp = get_portrait(gene=gene, mod=mod, remainder=rem, depth=depth, size=size,
+    for gene_id, mod, rem, depth, size, contrast, frame, portrait in portraits:
+        fp = get_portrait(gene_id=gene_id, mod=mod, remainder=rem, depth=depth, size=size,
                           contrast=contrast, frame=frame)
         if fp is None:
-            fp = FrequencyPortrait.objects.create(gene=gene, mod=mod, remainder=rem, depth=depth, size=size,
+            fp = FrequencyPortrait.objects.create(gene_id=gene_id, mod=mod, remainder=rem, depth=depth, size=size,
                                                   contrast=contrast, frame=frame, portrait=portrait)
 
         UserFrequencyPortrait.objects.create(user=user, portrait=fp, generation_id=last)
@@ -41,12 +58,12 @@ def add_to_cookies(cookies, portraits, response):
     else:
         last = 0
     current = last
-    for gene, mod, rem, depth, size, contrast, frame, portrait in portraits:
+    for gene_id, mod, rem, depth, size, contrast, frame, portrait in portraits:
         response.set_cookie('saved_image_' + str(current), ','.join(map(str, [portrait, mod, rem, depth, size, last])))
         current += 1
     response.set_cookie('num_saved_images', str(current))
 
 
-def get_portrait(gene, mod, remainder, depth, size, contrast, frame) -> FrequencyPortrait:
-    return FrequencyPortrait.objects.filter(gene=gene, mod=mod, remainder=remainder, depth=depth,
+def get_portrait(gene_id, mod, remainder, depth, size, contrast, frame) -> FrequencyPortrait:
+    return FrequencyPortrait.objects.filter(gene_id=gene_id, mod=mod, remainder=remainder, depth=depth,
                                             size=size, contrast=contrast, frame=frame).first()

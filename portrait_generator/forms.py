@@ -4,9 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class GeneratorForm(forms.Form):
-    gene_load_method = forms.ChoiceField(choices=(("R", "RAW INPUT"), ("F", "FILE"), ("U", "URL")))
-    gene_raw = forms.CharField(label='Gene', required=False)
-    gene_file = forms.FileField(label='Gene', required=False)
+    gene_load_method = forms.ChoiceField(choices=(("T", "TERM"), ("U", "URL")))
+    gene_term = forms.CharField(label='Gene', required=False)
     gene_url = forms.URLField(label='Gene', required=False)
     depth = forms.IntegerField(label='Depth', min_value=0, initial=3)
     mod = forms.IntegerField(label='Mod', min_value=1, initial=1)
@@ -15,22 +14,13 @@ class GeneratorForm(forms.Form):
     contrast = forms.BooleanField(label='Contrast', required=False)
     frame = forms.BooleanField(label='Frame', required=False, initial=True)
 
-    def clean_gene_raw(self):
+    def clean_gene_term(self):
         method = self.cleaned_data['gene_load_method']
-        gene = self.cleaned_data['gene_raw']
+        gene = self.cleaned_data['gene_term']
 
-        if method == "R":
+        if method == "T":
             if len(gene) == 0:
-                raise ValidationError(_('Empty gene'))
-        return gene
-
-    def clean_gene_file(self):
-        method = self.cleaned_data['gene_load_method']
-        gene = self.cleaned_data['gene_file']
-
-        if method == "F":
-            if gene is None:
-                raise ValidationError(_('Empty gene'))
+                raise ValidationError(_('Empty term'))
         return gene
 
     def clean_gene_url(self):

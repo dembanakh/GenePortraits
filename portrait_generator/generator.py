@@ -77,20 +77,6 @@ def generate(gene: str, depth: int, mod: int, remainder: int, size: int, contras
     return portrait.to_image()
 
 
-def extract_gene(data: dict, files: dict) -> str:
-    method = data['gene_load_method']
-    if method == 'R':
-        return data['gene_raw']
-    elif method == 'F':
-        bin_code = files['gene_file']
-        code = ''.join(bin_code.read().decode('utf8').strip().split('\n')[1:])
-        bin_code.close()
-        return ''.join(c for c in code.upper() if c in Alphabet)
-    elif method == 'U':
-        pass
-    raise ValueError('gene_load_method is not from the set {R, F, U}')
-
-
 Alphabet = {"A", "C", "G", "T"}
 
 Xletter = {"T": 0, "C": 0, "A": 1, "G": 1}

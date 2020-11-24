@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class FrequencyPortrait(models.Model):
-    gene = models.TextField()
+    gene_id = models.CharField(max_length=128)
     mod = models.PositiveIntegerField(default=1)
     remainder = models.PositiveIntegerField(default=0)
     depth = models.PositiveIntegerField()
