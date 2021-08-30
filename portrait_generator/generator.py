@@ -3,6 +3,16 @@ from PIL import Image
 
 
 class FrequencyPortrait:
+    """
+    :Methods:
+        resize(size)
+        add_contrast()
+        add_frame()
+        to_image()
+
+    :Authors:
+        Taras Banakh
+    """
 
     def __init__(self, gene: str, depth: int, mod: int, remainder: int):
         m_matrix = np.zeros((2 ** depth, 2 ** depth))
