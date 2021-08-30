@@ -81,6 +81,11 @@ p.header__right {
     color: #0088a9;
 }
 
+.header__main {
+    font-family: 'Roboto', sans-serif;
+    color: #0088a9;
+}
+
 main {
     background-color: #8D93AB;
     flex-grow: 1;

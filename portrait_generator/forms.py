@@ -5,11 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 
 class GeneratorForm(forms.Form):
     gene_load_method = forms.ChoiceField(choices=(("T", "TERM"), ("U", "URL")))
-    gene_term = forms.CharField(label='Gene', required=False)
+    gene_term = forms.CharField(label='Gene', required=False, help_text="E.g. NC_003155.5:c6374929-6373649")
     gene_url = forms.URLField(label='Gene', required=False)
     depth = forms.IntegerField(label='Depth', min_value=0, initial=3)
     mod = forms.IntegerField(label='Mod', min_value=1, initial=1)
-    remainder = forms.IntegerField(label='Remainder', min_value=0, initial=0)
+    remainder = forms.IntegerField(label='Remainder', min_value=0, initial=0, help_text="Must be <=Remainder")
     size = forms.IntegerField(label='Size', initial=256)
     contrast = forms.BooleanField(label='Contrast', required=False)
     frame = forms.BooleanField(label='Frame', required=False, initial=True)
