@@ -1,5 +1,5 @@
 
-**[Project still under active development]**
+**[Project is not under active development anymore. The demo webpage is not in use, since Heroku dropped free hosting]**
 
 # GenePortraits
 
